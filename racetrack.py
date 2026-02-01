@@ -8,12 +8,12 @@ def vitesse(trajectoire):
     Renvoie la vitesse de la voiture par rapport aux positions de trajectoire.
 
     """
-    if len(trajectoire) < 2: #verifie s'il y a au moins 2 points dans la liste car sinon on peut pas calculer la vitesse
+    if len(trajectoire) < 2:
         return (0,0)  
-    x1, y1 = trajectoire[-1] #on prend les 2 points du dernier élement de la liste
-    x0, y0 = trajectoire[-2] #on prend les 2 points de l'avant dernier élement de la liste
-    vitesse_x = x1 - x0 #on fait le calcul du x pour savoir la vitesse en x 
-    vitesse_y = y1 - y0 #pareil avec y
+    x1, y1 = trajectoire[-1]
+    x0, y0 = trajectoire[-2]
+    vitesse_x = x1 - x0
+    vitesse_y = y1 - y0
     return (vitesse_x, vitesse_y)
 
 def verif_collision(piste, debut, fin):
@@ -28,8 +28,8 @@ def verif_collision(piste, debut, fin):
     """
     if debut >= len(piste[0]) or fin >= len(piste) or debut < 0 or fin < 0:
         return True
-    if piste[fin][debut] == "#": #on vérifie si le point de départ est dans un # si oui
-         return True #on renvoie true ce qui signifie que le jeu est fini
+    if piste[fin][debut] == "#":
+         return True
     else:
         return False
 
@@ -44,7 +44,7 @@ def options(trajectoire, piste):
     vitesses = vitesse(trajectoire)
     x = trajectoire[-1][0]+vitesses[0]
     y = trajectoire[-1][1]+vitesses[1]
-    positions_voisines = [(x - 1, y - 1), (x - 1, y), (x - 1, y + 1),  #ce sont toutes les positions qui avoisine la position principale
+    positions_voisines = [(x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
                           (x, y - 1), (x, y), (x, y + 1), 
                           (x + 1, y - 1), (x + 1, y), (x + 1, y + 1)]
     point_dispo=[]
@@ -84,13 +84,13 @@ def couleurs(vitesse):
     vitesse_totale=abs(vitesse[0]+vitesse[1])
     
     if vitesse_totale <=3:
-        return '#0000a' + str(vitesse_totale) #dégradé bleu
+        return '#0000a' + str(vitesse_totale)
     elif vitesse_totale>=4 and vitesse_totale<6:
-        return '#8'+str(vitesse_totale)+'008'+str(vitesse_totale) #dégradé violet
+        return '#8'+str(vitesse_totale)+'008'+str(vitesse_totale)
     elif vitesse_totale>=6 and vitesse_totale <10:
-        return '#a'+ str(vitesse_totale) +'0000' #dégradé rouge
+        return '#a'+ str(vitesse_totale) +'0000'
     else:
-        return '#ff0000' #rouge
+        return '#ff0000'
     
     
 def dessine_trajectoire(vitesse, trajectoire, taille_case_x, taille_case_y,ligne_lst):
@@ -228,12 +228,11 @@ if __name__ == "__main__":
             mise_a_jour()
         efface_tout()
         
-        #les rectangles et textes du menu du choix des maps
-        rectangle(150, 250, 350, 350, couleur="palegoldenrod", remplissage="palegoldenrod")  # (map-mini)
-        rectangle(650, 250, 850, 350, couleur="khaki", remplissage="khaki")  # (map test)
-        rectangle(400, 550, 600, 450, couleur="moccasin", remplissage="moccasin")  # (map 1)
-        rectangle(150, 750, 350, 650, couleur="navajowhite", remplissage="navajowhite")  # (map 2)
-        rectangle(650, 750, 850, 650, couleur="bisque", remplissage="bisque")  # (map 3)
+        rectangle(150, 250, 350, 350, couleur="palegoldenrod", remplissage="palegoldenrod")
+        rectangle(650, 250, 850, 350, couleur="khaki", remplissage="khaki")
+        rectangle(400, 550, 600, 450, couleur="moccasin", remplissage="moccasin")
+        rectangle(150, 750, 350, 650, couleur="navajowhite", remplissage="navajowhite")
+        rectangle(650, 750, 850, 650, couleur="bisque", remplissage="bisque")
         texte(180,280,"Map Mini",couleur="black") 
         texte(183,680,"Map test",couleur="black")
         texte(455,480,"Map 1",couleur="black")
@@ -241,7 +240,7 @@ if __name__ == "__main__":
         texte(700,680,"Map 3",couleur="black")
         texte(220,100, "Veuillez choisir la carte de votre choix", couleur="black")
         
-        while choix: #boucle du choix entre les maps
+        while choix:
             ev = donne_ev()
             tev = type_ev(ev)
             if tev == 'ClicGauche':
@@ -254,28 +253,24 @@ if __name__ == "__main__":
                 choix_map = charger(fichier)
                 trajectoire.append((1,1)) 
                 choix = False
-            # Ouverture de la map test
             if position_choix[-1][0] >= 150 and position_choix[-1][0] <= 350 and position_choix[-1][1] >= 650 and position_choix[-1][1] <= 750:
                 print('Vous avez choisi la map test')
                 trajectoire.append((3,31))
                 fichier = "pistes/maps-texte/map_test.txt"
                 choix_map = charger(fichier)
                 choix = False
-            # Ouverture de la map 1
             if position_choix[-1][0] >= 400 and position_choix[-1][0] <= 600 and position_choix[-1][1] >= 450 and position_choix[-1][1] <= 550:
                 print('Vous avez choisi la map 1')
                 trajectoire.append((33,5))
                 fichier = "pistes/maps-texte/map1.txt"
                 choix_map = charger(fichier)
                 choix = False
-            # Ouverture de la map 2
             if position_choix[-1][0] >= 650 and position_choix[-1][0] <= 850 and position_choix[-1][1] >= 250 and position_choix[-1][1] <= 350:
                 print('Vous avez choisi la map 2')
                 trajectoire.append((6,6))
                 fichier = "pistes/maps-texte/map2.txt"
                 choix_map = charger(fichier)
                 choix = False
-            # Ouverture de la map 3
             if position_choix[-1][0] >= 650 and position_choix[-1][0] <= 850 and position_choix[-1][1] >= 650 and position_choix[-1][1] <= 750:
                 print('Vous avez choisi la map 3')
                 trajectoire.append((32,5))
@@ -304,9 +299,9 @@ if __name__ == "__main__":
             
             dessine_trajectoire(vitesse(trajectoire), trajectoire, taille_case_x, taille_case_y,ligne_lst)
         
-            for elem in option: #affichage des points disponibles pour déplacement
+            for elem in option:
                 cercle(taille_case_x*elem[0], taille_case_y*elem[1], 4, couleur="black", remplissage="white")
-            cercle(taille_case_x*trajectoire[-1][0],taille_case_y*trajectoire[-1][1], 4, couleur="black", remplissage="black") #affichage de la voiture
+            cercle(taille_case_x*trajectoire[-1][0],taille_case_y*trajectoire[-1][1], 4, couleur="black", remplissage="black")
             
             ev = donne_ev()
             tev = type_ev(ev)
@@ -319,7 +314,7 @@ if __name__ == "__main__":
             
             elif tev == 'Touche':
                 nom_touche = touche(ev)
-                if nom_touche == 'BackSpace' and len(trajectoire) >= 2 : #condition pour que on ne pop pas le vide
+                if nom_touche == 'BackSpace' and len(trajectoire) >= 2 :
                     trajectoire.pop()
                 if nom_touche == 'Escape':
                     efface_tout()
@@ -343,12 +338,9 @@ if __name__ == "__main__":
                 break 
     
             if verification_victoire(trajectoire, choix_map):
-                #efface_tout()
-                dessine_trajectoire(vitesse(trajectoire), trajectoire, taille_case_x, taille_case_y,ligne_lst) #a mettre quand on utilise pas le solveur
+                dessine_trajectoire(vitesse(trajectoire), trajectoire, taille_case_x, taille_case_y,ligne_lst)
                 texte(360,450,"Vous avez gagnez!", couleur="black")
                 boucle = False
                 break
             
             mise_a_jour()
-
-
